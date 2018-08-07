@@ -6,6 +6,7 @@ name = "pypi"
 [dev-packages]
 
 [packages]
+sqlalchemy = "*"
 gpiozero = "*"
 "c4adc89" = {path = "./../Adafruit_Python_GPIO"}
 "f09cb20" = {path = "./../Adafruit_Python_DHT"}
