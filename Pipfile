@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+
+[packages]
+gpiozero = "*"
+"c4adc89" = {path = "./../Adafruit_Python_GPIO"}
+"f09cb20" = {path = "./../Adafruit_Python_DHT"}
+"0bbaa9d" = {path = "./../RPi.GPIO-0.6.3"}
+
+[requires]
+python_version = "3.5"
