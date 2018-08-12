@@ -11,4 +11,4 @@ if __name__ == '__main__':
     print('started: ', datetime.now().isoformat())
 
     # ping healthcheck
-    requests.get(config.['healthcheck']['url'])
+    requests.get(config['healthcheck']['url'])
