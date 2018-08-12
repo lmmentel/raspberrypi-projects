@@ -24,16 +24,16 @@ def measure_ldr_resistance(pin_no, capacitance=0.000001):
     # output on the pin for
     GPIO.setup(pin_no, GPIO.OUT)
     GPIO.setup(pin_no, GPIO.LOW)
-    time.sleep(0.1)
+    sleep(0.1)
 
     # change the pin back to input
     GPIO.setup(pin_no, GPIO.IN)
 
     # count until pin goes to HIGH
-    start = time.time()
-    end = time.time()
+    start = time()
+    end = time()
     while (GPIO.input(pin_no) == GPIO.LOW):
-        end = time.time()
+        end = time()
 
     return (end - start) / capacitance
 
@@ -57,8 +57,10 @@ if __name__ == '__main__':
 
         except KeyboardInterrupt:
             print('bye bye...')
+            break
         except:
             raise
+            break
 
     # cleanup
     GPIO.cleanup()
