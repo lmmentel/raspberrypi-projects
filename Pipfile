@@ -4,15 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+ipython = "*"
 
 [packages]
 sqlalchemy = "*"
+influxdb = "*"
 toml = "*"
 requests = "*"
 "RPi.GPIO" = "*"
 gpiozero = "*"
-"Adafruit_GPIO" = { git = "git@github.com:adafruit/Adafruit_Python_GPIO.git"}
 "Adafruit_DHT" = "*"
+"Adafruit_GPIO" = { git = "git@github.com:adafruit/Adafruit_Python_GPIO.git"}
+"Adafruit_BME280" = { git = "git@github.com:adafruit/Adafruit_Python_BME280.git"}
 
 
 [requires]
