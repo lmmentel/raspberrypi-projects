@@ -82,8 +82,10 @@ if __name__ == '__main__':
 
         except KeyboardInterrupt:
             print('bye bye...')
+            break
         except:
             raise
+            break
 
     # cleanup
     GPIO.cleanup()
