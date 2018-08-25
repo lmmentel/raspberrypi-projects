@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+ipython = "*"
+
+[packages]
+influxdb = "*"
+toml = "*"
+requests = "*"
+"RPi.GPIO" = "*"
+gpiozero = "*"
+"Adafruit_GPIO" = { git = "git@github.com:adafruit/Adafruit_Python_GPIO.git"}
+"Adafruit_BME280" = { git = "git@github.com:adafruit/Adafruit_Python_BME280.git"}
+
+
+[requires]
+python_version = "3.6"
