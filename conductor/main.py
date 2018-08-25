@@ -1,6 +1,7 @@
 
 from datetime import datetime
 from influxdb import InfluxDBClient
+from influxdb.exceptions import InfluxDBServerError
 import requests
 import time
 import toml
@@ -106,7 +107,10 @@ if __name__ == '__main__':
                 },
             }
 
-            idb.write_points([data], database='sensors')
+            try:
+                idb.write_points([data], database='sensors')
+            except InfluxDBServerError as e:
+                print('Error: {}'.format(e))
 
             # ping healthcheck
             requests.get(config['healthcheck']['url'])
