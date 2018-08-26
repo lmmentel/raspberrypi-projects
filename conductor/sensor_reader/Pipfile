@@ -12,9 +12,9 @@ toml = "*"
 requests = "*"
 "RPi.GPIO" = "*"
 gpiozero = "*"
-"Adafruit_GPIO" = { git = "git@github.com:adafruit/Adafruit_Python_GPIO.git"}
-"Adafruit_BME280" = { git = "git@github.com:adafruit/Adafruit_Python_BME280.git"}
-
+"Adafruit_GPIO" = {file = "https://github.com/adafruit/Adafruit_Python_GPIO/archive/master.zip"}
+"Adafruit_BME280" = {file = "https://github.com/adafruit/Adafruit_Python_BME280/archive/master.zip"}
+"5a2883a" = {file = "https://github.com/adafruit/Adafruit_Python_PureIO/archive/master.zip"}
 
 [requires]
 python_version = "3.6"
