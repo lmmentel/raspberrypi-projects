@@ -80,7 +80,7 @@ if __name__ == '__main__':
                     p_mode=BME280_OSAMPLE_8,
                     h_mode=BME280_OSAMPLE_8)
 
-    idb = InfluxDBClient()
+    idb = InfluxDBClient(host='influxdb', port=8086)
 
     while True:
         try:
