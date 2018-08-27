@@ -5,7 +5,8 @@ services:
         image: influxdb:1.6.1
         ports:
             - "8086:8086"
-            - "8083:8083"
+        networks:
+            - sensornet
         volumes:
             - $PWD/influxdb:/var/lib/influxdb
             - $PWD/influxdb.conf:/etc/influxdb/influxdb.conf:ro
@@ -15,6 +16,10 @@ services:
             - influxdb
         build: sensor_reader
         privileged: true
+        environment:
+            - INFLUX_HOST='influxdb'
+        networks:
+            - sensornet
         restart: always
     grafana:
         depends_on:
@@ -25,7 +30,10 @@ services:
             - "3000:3000"
         environment:
             - GF_INSTALL_PLUGINS=grafana-clock-panel
+        networks:
+            - sensornet
         volumes:
             - $PWD/grafana:/var/lib/grafana
         restart: always
-
+networks:
+    sensornet:
