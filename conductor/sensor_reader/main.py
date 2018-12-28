@@ -97,7 +97,7 @@ if __name__ == '__main__':
                   ]))
 
             data = {
-                "measurement": "PF41-livingroom",
+                "measurement": "lakkegata.livingroom",
                 "time": ts.isoformat(),
                 "fields": {
                     "temperature": temp,
