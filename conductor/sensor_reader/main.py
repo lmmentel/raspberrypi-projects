@@ -12,7 +12,7 @@ from Adafruit_BME280 import *
 
 GPIO.setmode(GPIO.BOARD)
 DT_MFT = 'YYYY-MM-DD HH:mm:SS'
-FREQ = 5   # frequency of data collection in sec
+FREQ = 30   # frequency of data collection in sec
 
 
 # load config
