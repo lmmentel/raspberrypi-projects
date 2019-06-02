@@ -1,10 +1,6 @@
 
 from datetime import datetime
-from influxdb import InfluxDBClient
-from influxdb.exceptions import InfluxDBServerError
-import requests
 import time
-import toml
 
 import RPi.GPIO as GPIO
 from Adafruit_BME280 import *
