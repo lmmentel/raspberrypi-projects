@@ -14,7 +14,7 @@ requests = "*"
 "RPi.GPIO" = "*"
 gpiozero = "*"
 "Adafruit_DHT" = "*"
-
+pyserial = "*"
 
 [requires]
 python_version = "3.7"
