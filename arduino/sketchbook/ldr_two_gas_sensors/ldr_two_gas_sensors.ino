@@ -8,8 +8,8 @@
 
 // analog input pin configuration
 const int LDRpin=5;
-const int MQ3pin=0;
-const int MQ9pin=1;
+const int MQ3pin=1;
+const int MQ9pin=0;
 
 int value_ldr;
 int value_mq3;
