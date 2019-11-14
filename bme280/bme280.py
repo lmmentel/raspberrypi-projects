@@ -1,91 +1,24 @@
-from __future__ import print_function
-from datetime import datetime
-from time import sleep, time
+import board
+import digitalio
+import busio
+import time
+import adafruit_bme280
 
-import RPi.GPIO as GPIO
-from Adafruit_BME280 import *
+# Create library object using our Bus I2C port
+i2c = busio.I2C(board.SCL, board.SDA)
+bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
 
+# OR create library object using our Bus SPI port
+#spi = busio.SPI(board.SCK, board.MOSI, board.MISO)
+#bme_cs = digitalio.DigitalInOut(board.D10)
+#bme280 = adafruit_bme280.Adafruit_BME280_SPI(spi, bme_cs)
 
-GPIO.setmode(GPIO.BOARD)
-DT_MFT = 'YYYY-MM-DD HH:mm:SS'
-FREQ = 60   # frequency of data collection in sec
+# change this to match the location's pressure (hPa) at sea level
+bme280.sea_level_pressure = 1013.25
 
-
-def measure_tph(sensor):
-    '''
-    Measure temperature, pressure and humidity with BME280 sensor
-
-    Args:
-        sensor
-
-    Returns:
-        tuple:
-            - temperature in degrees C
-            - pressure in kPa
-            - realtive humidity in %
-    '''
-
-    degrees = sensor.read_temperature()
-    pascals = sensor.read_pressure()
-    pressure = pascals / 100
-    humidity = sensor.read_humidity()
-
-    return degrees, pressure, humidity
-
-
-def measure_ldr_resistance(pin_no, capacitance=0.000001):
-    '''
-    Calculate the resistance from the measured
-    capacitor charging time and LDR
-
-    Args:
-        pin_no (int): pin numer
-        capacitance (float): capacitance
-    '''
-
-    # output on the pin for
-    GPIO.setup(pin_no, GPIO.OUT)
-    GPIO.setup(pin_no, GPIO.LOW)
-    time.sleep(0.1)
-
-    # change the pin back to input
-    GPIO.setup(pin_no, GPIO.IN)
-
-    # count until pin goes to HIGH
-    start = time.time()
-    end = time.time()
-    while (GPIO.input(pin_no) == GPIO.LOW):
-        end = time.time()
-
-    return (end - start) / capacitance
-
-
-if __name__ == '__main__':
-
-    sensor = BME280(t_mode=BME280_OSAMPLE_8,
-                    p_mode=BME280_OSAMPLE_8,
-                    h_mode=BME280_OSAMPLE_8)
-
-    while True:
-        try:
-            ts = datetime.now()
-            temp, pressure, humidity = measure_tph(sensor)
-
-            print(' | '.join([
-                  ts.isoformat(),
-                  '{0:0.3f} deg C'.format(temp),
-                  '{0:0.2f} hPa'.format(pressure),
-                  '{0:0.2f} %'.format(humidity)
-                  ]))
-
-            sleep(FREQ)
-
-        except KeyboardInterrupt:
-            print('bye bye...')
-            break
-        except:
-            raise
-            break
-
-    # cleanup
-    GPIO.cleanup()
+while True:
+    print("\nTemperature: %0.1f C" % bme280.temperature)
+    print("Humidity: %0.1f %%" % bme280.humidity)
+    print("Pressure: %0.1f hPa" % bme280.pressure)
+    print("Altitude = %0.2f meters" % bme280.altitude)
+    time.sleep(2)
