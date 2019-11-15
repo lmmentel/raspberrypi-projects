@@ -11,7 +11,7 @@ from path import Path
 
 base_path = Path('/sys/bus/w1/devices')
 # device_dir = '28-020791774310'
-devide_dir = '28-021192460aa7'
+device_dir = '28-021192460aa7'
 
 device_file = base_path.joinpath(device_dir, 'w1_slave')
 
