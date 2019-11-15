@@ -17,6 +17,7 @@ gpiozero = "*"
 pyserial = "*"
 path-py = "*"
 adafruit-circuitpython-bme280 = "*"
+invoke = "*"
 
 [requires]
 python_version = "3.7"
