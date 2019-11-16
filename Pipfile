@@ -18,6 +18,7 @@ pyserial = "*"
 path-py = "*"
 adafruit-circuitpython-bme280 = "*"
 invoke = "*"
+awsiotpythonsdk = "*"
 
 [requires]
 python_version = "3.7"
