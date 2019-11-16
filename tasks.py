@@ -27,3 +27,10 @@ def testaws(c):
           ' -c {0:s}'.format(config['awsiot']['certificate']) +
           ' -k {0:s}'.format(config['awsiot']['private_key']))
 
+@task
+def ds18b20(c):
+
+    from sensors.ds18b20 import get_temperature
+
+    print(get_temperature(config['ds18b20']['device_dir']))
+
