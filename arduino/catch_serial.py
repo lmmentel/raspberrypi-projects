@@ -1,12 +1,14 @@
 
 from datetime import datetime
-import csv
 import logging
 import serial
+import time
 
 
-ARDUINO_PORT = "/dev/ttyUSB0"
+PORT = "/dev/ttyUSB0"
 BAUDRATE = 9600
+
+ser = serial.Serial(port=PORT, baudrate=BAUDRATE)
 
 logger = logging.getLogger('catch_serial_arudino')
 logger.setLevel(logging.DEBUG)
@@ -26,31 +28,32 @@ def parse_serial(string):
         split = [tag.split(':') for tag in string.split(',')]
         return dict((t[0], int(t[1])) for t in split)
     else:
-        return dict()
+        return {'LDR': None, 'MQ3': None, 'MQ9': None}
 
-def main():
 
-    ser = serial.Serial(port=ARDUINO_PORT, baudrate=BAUDRATE)
+def read_arduino(ser):
+    '''
+    Read the Arduino sensors through USB
+
+    Args:
+        port (str): USB port address
+        baudrate (int): baudrate
+    '''
+
     ser.flushInput()
 
+    line_raw = ser.readline()
+    line = line_raw.decode("utf-8")
+    parsed = parse_serial(line)
 
-    with open('arduino_data.csv', 'w') as fo:
-        writer = csv.DictWriter(fo, fieldnames=['DT', 'LDR', 'MQ3', 'MQ9'], delimiter=',')
-        writer.writeheader()
-
-    while True:
-        try:
-            line_raw = ser.readline()
-            line = line_raw.decode("utf-8")
-            parsed = parse_serial(line)
-            logger.info(str(parsed))
-            with open('arduino_data.csv', 'a') as fo:
-                writer = csv.DictWriter(fo, fieldnames=['DT', 'LDR', 'MQ3', 'MQ9'], delimiter=',')
-                writer.writerow({'DT': datetime.now(), **parsed})
-        except KeyboardInterrupt:
-            print("see you")
-            break
+    return parsed
 
 
 if __name__ == "__main__":
-    main()
+
+    while True:
+
+        values = read_arduino(ser)
+        logger.info(str(values))
+        time.sleep(2)
+
