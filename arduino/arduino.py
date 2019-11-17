@@ -31,7 +31,7 @@ def parse_serial(string):
         return {'LDR': None, 'MQ3': None, 'MQ9': None}
 
 
-def read_arduino(ser):
+def read_arduino():
     '''
     Read the Arduino sensors through USB
 
