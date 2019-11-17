@@ -1,8 +1,8 @@
-/* 
+/*
 
-- LDR 
+- LDR
 - MQ-3 Alkohol Sensor
-- MQ-9 CO, flammable gasses 
+- MQ-9 CO, flammable gasses
 
 */
 
@@ -28,11 +28,11 @@ void loop(void)
   value_ldr = analogRead(LDRpin); // read LDR
   value_mq3 = analogRead(MQ3pin); // read MQ-3
   value_mq9 = analogRead(MQ9pin); // read MQ-9
-  Serial.print("LDR:");
+  Serial.print("arduino.LDR:");
   Serial.print(value_ldr, DEC);
-  Serial.print(",MQ3:");
+  Serial.print(",arduino.MQ3:");
   Serial.print(value_mq3, DEC);
-  Serial.print(",MQ9:");
+  Serial.print(",arduino.MQ9:");
   Serial.println(value_mq9, DEC);
   delay(1000);
 }
