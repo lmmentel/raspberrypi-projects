@@ -51,7 +51,7 @@ def get_temperature(device_dir):
     device_file = base_path.joinpath(device_dir, 'w1_slave')
     lines = read_device_file(device_file)
     temp = parse_temp(lines)
-    return temp
+    return {'ds18b20.temperature': temp}
 
 
 if __name__ == '__main__':
