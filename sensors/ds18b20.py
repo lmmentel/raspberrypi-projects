@@ -39,7 +39,7 @@ def parse_temp(lines):
         return match
 
 
-def get_temperature(device_dir):
+def read_temperature(device_dir):
     '''
     Return the temperature in C from DS18B20
 
