@@ -1,4 +1,4 @@
-# config
+.*.swp
 Pipfile.lock
 conductor/config.toml
 
