@@ -10,6 +10,7 @@ from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from sensors.ds18b20 import read_temperature
 from sensors.bme280 import read_bme280
 from arduino.arduino import read_arduino
+from pi.monitor import read_metrics
 
 
 # configure logging
@@ -25,7 +26,9 @@ with open('config.toml', 'r') as f:
 
 # configure the AWS IoT client
 aws_client = AWSIoTMQTTClient(config['awsiot']['client_id'])
-aws_client.configureEndpoint(config['awsiot']['endpoint'], 8883)
+aws_client.configureEndpoint(
+        config['awsiot']['endpoint'],
+        config['awsiot']['port'])
 aws_client.configureCredentials(
     config['awsiot']['root_cert'],
     config['awsiot']['private_key'],
@@ -36,9 +39,7 @@ aws_client.configureConnectDisconnectTimeout(10)
 aws_client.configureMQTTOperationTimeout(5)
 
 aws_client.connect()
-
 time.sleep(2)
-topic = config['device']['topic']
 
 
 if __name__ == '__main__':
@@ -53,8 +54,13 @@ if __name__ == '__main__':
 
         sensor_msg = {'timestamp': datetime.now().isoformat(), **temp, **tph, **gasldr}
         sensor_msg_json = json.dumps(sensor_msg)
-        logger.info(sensor_msg_json)
         aws_client.publish(config['sensors']['topic'], sensor_msg_json, 1)
-        logger.info('message published')
-        time.sleep(config['sampling'])
+        logger.info('sensor message published')
 
+        metrics = read_metrics()
+        logger.info(str(metrics))
+        metrics_json = json.dumps({'timestamp': datetime.now().isoformat(), **metrics})
+        aws_client.publish(config['device']['topic'], metrics_json, 1)
+        logger.info('device message published')
+
+        time.sleep(config['sampling'])
