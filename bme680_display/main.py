@@ -38,10 +38,10 @@ def update_display(display, values):
 
     draw = ImageDraw.Draw(image)
     draw.rectangle((0, 0, display.width, display.height), outline=0, fill=0)
-    draw.text((0, 0), f"T: {values['temperature']:.1f} C", font=font, fill=255)
-    draw.text((55, 15), f"P: {values['pressure']:.1f} hPa ", font=font, fill=255)
-    draw.text((0, 15), f"H: {values['humidity']:.1f} %", font=font, fill=255)
-    draw.text((55, 0), f"G: {values['gas']:d} Ohm", font=font, fill=255)
+    draw.text((0, 0), f"T: {values['bme680.temperature']:.1f} C", font=font, fill=255)
+    draw.text((55, 15), f"P: {values['bme680.pressure']:.1f} hPa ", font=font, fill=255)
+    draw.text((0, 15), f"H: {values['bme680.humidity']:.1f} %", font=font, fill=255)
+    draw.text((55, 0), f"G: {values['bme680.gas']:d} Ohm", font=font, fill=255)
     display.image(image)
     display.show()
 
