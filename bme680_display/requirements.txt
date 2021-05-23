@@ -5,3 +5,4 @@ adafruit-circuitpython-bme680
 adafruit-circuitpython-rgb-display
 adafruit-circuitpython-ssd1306
 Pillow
+influxdb
