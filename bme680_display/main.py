@@ -1,11 +1,13 @@
-
+from datetime import datetime
+from time import sleep
 import logging
 import board
+
+from influxdb import InfluxDBClient
+from influxdb.exceptions import InfluxDBServerError
 import adafruit_bme680
-from time import sleep
-from datetime import datetime
-from PIL import Image, ImageDraw, ImageFont
 import adafruit_ssd1306
+from PIL import Image, ImageDraw, ImageFont
 
 
 logging.basicConfig(filename='bme680.log', level=logging.DEBUG)
@@ -50,6 +52,7 @@ if __name__ == "__main__":
     
     sensor = configure_bme680()
     display = configure_display()
+    idb = InfluxDBClient(host='influxdb', port=8086)
 
     while True:
 
@@ -59,9 +62,20 @@ if __name__ == "__main__":
             ["temperature", "humidity", "pressure", "gas"]
         )
 
-        print(datetime.now(), " | ".join([f"{v:10.2f}" for v in values.values()]))
-        logging.info(",".join([datetime.now().isoformat()] + [str(v) for v in values.values()]))
+        ts = datetime.now()
+        print(ts, " | ".join([f"{v:10.2f}" for v in values.values()]))
+        logging.info(",".join([ts.isoformat()] + [str(v) for v in values.values()]))
         
-        update_display(display, values)
+        data = {
+            "measurement": "lakkegata.office",
+            "time": ts.isoformat(),
+            "fields": values
+        }
 
+        try:
+            idb.write_points([data], database="skeletor.sensors")
+        except InfluxDBServerError as e:
+            logging.error('InfluxDB Error: {}'.format(e))
+
+        update_display(display, values)
         sleep(30)
