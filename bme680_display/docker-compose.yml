@@ -8,7 +8,7 @@ services:
         networks:
             - sensornet
         volumes:
-            - $PWD/influxdb:/var/lib/influxdb
+            - influxdata:/var/lib/influxdb
             - $PWD/influxdb.conf:/etc/influxdb/influxdb.conf:ro
         restart: always
     sensors:
@@ -21,19 +21,9 @@ services:
         networks:
             - sensornet
         restart: always
-    # grafana:
-    #     depends_on:
-    #         - influxdb
-    #         - sensors
-    #     image: fg2it/grafana-armhf:v5.0.4
-    #     ports:
-    #         - "3000:3000"
-    #     environment:
-    #         - GF_INSTALL_PLUGINS=grafana-clock-panel
-    #     networks:
-    #         - sensornet
-    #     volumes:
-    #         - $PWD/grafana:/var/lib/grafana
-    #     restart: always
+
 networks:
     sensornet:
+volumes:
+    influxdata:
+        external: true
